@@ -6,7 +6,7 @@ This repository contains the automatic scripts to build AMD ROCm software stack 
 # run with root to install amdgpu driver
 ./driver.sh
 
-# ROCm will be installed at $HOME/opt/rocm/x.y.z
+# ROCm will be installed at $HOME/opt/rocm/x.y.z, change the version and install prefix in `common.sh`
 ./0.radeontop.sh
 ./1.llvm.sh
 ./2.rocm.sh
