@@ -6,7 +6,7 @@ source $SCRIPT_DIR/common.sh
 git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/rocPRIM $ROCM_TMP_DIR/rocPRIM
 git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/rocThrust $ROCM_TMP_DIR/rocThrust
 
-# Note that `module load rocm` is necessary!
+export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
 
 pushd $ROCM_TMP_DIR/rocPRIM
 rm -rf build

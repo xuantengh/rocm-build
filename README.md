@@ -2,6 +2,9 @@
 
 This repository contains the automatic scripts to build AMD ROCm software stack for heterogenous computing.
 
+Change the install directory and ROCm version in `common.sh`.
+Run the shell script **one by one** as the prefix numbers follow the dependency order.
+
 ```bash
 # run with root to install amdgpu driver
 ./driver.sh
@@ -11,12 +14,10 @@ This repository contains the automatic scripts to build AMD ROCm software stack 
 ./1.llvm.sh
 ./2.rocm.sh
 # ...
-./13.conda.sh
 ```
 
 > [!CAUTION]
-> ROCm 6.0 is a newly released version, the AMD team is still working to support the latest PyTorch atop it.
-> So the `14.pytorch.sh` script is not usable as for now.
+> Patch is required for PyTorch building with ROCm 6.0, see `19.pytorch.sh` for detauls.
 
 ## Test
 

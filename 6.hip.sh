@@ -17,7 +17,6 @@ cmake -S . -B build -G "Ninja" \
 -DCMAKE_INSTALL_PREFIX=$ROCM_INSTALL_PREFIX
 
 cmake --build build
-# cmake --build build -t install
 popd
 
 pushd $ROCM_TMP_DIR/clr
@@ -27,13 +26,15 @@ mkdir build && cd build
 cmake -S .. -G "Ninja" \
 -DCMAKE_BUILD_TYPE=Release -DCLR_BUILD_HIP=ON \
 -DHIP_COMMON_DIR=$ROCM_TMP_DIR/HIP \
--DHIPCC_BIN_DIR=$ROCM_INSTALL_PREFIX/build \
+-DHIPCC_BIN_DIR=$ROCM_TMP_DIR/HIPCC/build \
 -DCMAKE_PREFIX_PATH=$ROCM_INSTALL_PREFIX \
 -DCMAKE_INSTALL_PREFIX=$ROCM_INSTALL_PREFIX
 
 cmake --build .
-# ln -s $ROCM_INSTALL_PREFIX/bin/hipcc $ROCM_INSTALL_PREFIX/bin/hipcc.bat
-# ln -s $ROCM_INSTALL_PREFIX/bin/hipconfig $ROCM_INSTALL_PREFIX/bin/hipconfig.bat
 cmake --build . -t install
+rm -rf $ROCM_INSTALL_PREFIX/bin/hipcc.bat
+rm -rf $ROCM_INSTALL_PREFIX/bin/hipconfig.bat
+ln -s $ROCM_INSTALL_PREFIX/bin/hipcc $ROCM_INSTALL_PREFIX/bin/hipcc.bat
+ln -s $ROCM_INSTALL_PREFIX/bin/hipconfig $ROCM_INSTALL_PREFIX/bin/hipconfig.bat
 popd
 

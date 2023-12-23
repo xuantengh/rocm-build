@@ -15,6 +15,8 @@ cmake --build build
 cmake --build build -t install
 popd
 
+exit 0
+
 rm -rf $ROCM_TMP_DIR/rocgdb/build
 mkdir -p $ROCM_TMP_DIR/rocgdb/build
 pushd $ROCM_TMP_DIR/rocgdb/build

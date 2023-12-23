@@ -9,6 +9,9 @@ export ROCM_GPU_ARCH=gfx908
 
 mkdir -p $ROCM_TMP_DIR
 
+export MIOPEN_TMP_DIR=$ROCM_TMP_DIR/miopen.deps
+mkdir -p $MIOPEN_TMP_DIR
+
 set -e
 
 function download_repo_and_extract {

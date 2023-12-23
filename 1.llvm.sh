@@ -3,11 +3,11 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
 
-# LLVM, git is too slow to download, using wget instead
-# git clone https://github.com/RadeonOpenCompute/llvm-project.git -b rocm-$ROCM_VERSION $ROCM_TMP_DIR/llvm
-download_repo_and_extract "https://github.com/ROCm/llvm-project/archive/refs/tags/rocm-$ROCM_VERSION.tar.gz" "llvm"
+LLVM_DIR=$ROCM_TMP_DIR/llvm-project
 
-pushd $ROCM_TMP_DIR/llvm-project-rocm-$ROCM_VERSION
+# git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/llvm-project $LLVM_DIR
+
+pushd $LLVM_DIR
 rm -rf build
 cmake -S llvm -B build -G "Ninja" \
 -DCMAKE_BUILD_TYPE=Release \
@@ -16,9 +16,12 @@ cmake -S llvm -B build -G "Ninja" \
 -DLLVM_INCLUDE_TESTS=OFF \
 -DLLVM_ENABLE_PROJECTS="llvm;clang;lld" \
 -DLLVM_ENABLE_RUNTIMES="compiler-rt" \
+-DCMAKE_CXX_LINK_FLAGS="-Wl,-rpath,$ROCM_INSTALL_PREFIX/lib" \
 -DCMAKE_INSTALL_PREFIX=$ROCM_INSTALL_PREFIX \
--DLLVM_TARGETS_TO_BUILD="X86;AMDGPU"
+-DLLVM_TARGETS_TO_BUILD="X86;AMDGPU" \
+-DLLVM_BUILD_TESTS=OFF -DLLVM_INCLUDE_TESTS=OFF
 
 cmake --build build
 cmake --build build -t install
 popd
+
