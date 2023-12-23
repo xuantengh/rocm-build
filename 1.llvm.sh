@@ -5,7 +5,7 @@ source $SCRIPT_DIR/common.sh
 
 LLVM_DIR=$ROCM_TMP_DIR/llvm-project
 
-# git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/llvm-project $LLVM_DIR
+git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/llvm-project $LLVM_DIR
 
 pushd $LLVM_DIR
 rm -rf build

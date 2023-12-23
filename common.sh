@@ -11,6 +11,10 @@ mkdir -p $ROCM_TMP_DIR
 
 export MIOPEN_TMP_DIR=$ROCM_TMP_DIR/miopen.deps
 mkdir -p $MIOPEN_TMP_DIR
+export TORCH_TMP_DIR=$ROCM_TMP_DIR/torch.extra
+mkdir -p $TORCH_TMP_DIR
+
+CONDA_PATH=$HOME/miniconda3
 
 set -e
 

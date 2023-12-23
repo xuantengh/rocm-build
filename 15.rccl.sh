@@ -3,8 +3,8 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
 
-# git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/rccl $ROCM_TMP_DIR/rccl
-# git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/HIPIFY $ROCM_TMP_DIR/hipify
+git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/rccl $ROCM_TMP_DIR/rccl
+git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/HIPIFY $ROCM_TMP_DIR/hipify
 
 export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
 

@@ -4,7 +4,6 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
 
 PYTORCH_BRANCH=v2.2.0-rc5
-CONDA_PATH=$HOME/miniconda3
 
 if [ ! -d $ROCM_TMP_DIR/pytorch ]; then
   git clone https://github.com/pytorch/pytorch $ROCM_TMP_DIR/pytorch -b $PYTORCH_BRANCH --depth 1
@@ -48,7 +47,7 @@ pushd $ROCM_TMP_DIR/pytorch
   export USE_NNPACK=0
   export USE_QNNPACK=0
   export USE_XNNPACK=0
-  export LD_LIBRARY_PATH=$ROCM_GPU_ARCH/lib
+  export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
   python setup.py develop
 popd
 

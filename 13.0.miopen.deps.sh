@@ -15,8 +15,8 @@ make install
 popd
 
 # Boost
-# wget https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.gz -O $MIOPEN_TMP_DIR/boost.tar.gz
-# tar -zxvf $MIOPEN_TMP_DIR/boost_1.79.tar.gz -C $MIOPEN_TMP_DIR
+wget https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.gz -O $MIOPEN_TMP_DIR/boost.tar.gz
+tar -zxvf $MIOPEN_TMP_DIR/boost_1.79.tar.gz -C $MIOPEN_TMP_DIR
 pushd $MIOPEN_TMP_DIR/boost_*
 rm -rf build stage
 ./bootstrap.sh --without-libraries="mpi" \
@@ -26,7 +26,7 @@ popd
 
 
 # Half
-# git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/half $MIOPEN_TMP_DIR/half
+git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/half $MIOPEN_TMP_DIR/half
 pushd $MIOPEN_TMP_DIR/half
 pwd
 rm -rf build
@@ -38,7 +38,7 @@ cmake --build build -t install
 popd
 
 # rocMLIR
-# git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/rocMLIR $MIOPEN_TMP_DIR/rocmlir
+git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/rocMLIR $MIOPEN_TMP_DIR/rocmlir
 pushd $MIOPEN_TMP_DIR/rocmlir
 rm -rf build
 cmake -S . -B build -G Ninja \
@@ -52,7 +52,7 @@ cmake --build build -t install
 popd
 
 # Json
-# git clone --depth 1 -b v3.9.1 https://github.com/nlohmann/json $MIOPEN_TMP_DIR/json
+git clone --depth 1 -b v3.9.1 https://github.com/nlohmann/json $MIOPEN_TMP_DIR/json
 pushd $MIOPEN_TMP_DIR/json
 rm -rf build
 cmake -S . -B build -G Ninja \
@@ -64,7 +64,7 @@ cmake --build build
 cmake --build build -t install
 popd
 
-# git clone --depth 1 -b v0.2.18-p0 https://github.com/ROCmSoftwarePlatform/FunctionalPlus $MIOPEN_TMP_DIR/FunctionalPlus
+git clone --depth 1 -b v0.2.18-p0 https://github.com/ROCmSoftwarePlatform/FunctionalPlus $MIOPEN_TMP_DIR/FunctionalPlus
 pushd $MIOPEN_TMP_DIR/FunctionalPlus
 rm -rf build
 cmake -S . -B build -G Ninja \
@@ -75,7 +75,7 @@ cmake --build build -t install
 popd
 
 # Eigen
-# git clone --depth 1 -b 3.4.0 https://github.com/ROCmSoftwarePlatform/eigen $MIOPEN_TMP_DIR/eigen
+git clone --depth 1 -b 3.4.0 https://github.com/ROCmSoftwarePlatform/eigen $MIOPEN_TMP_DIR/eigen
 pushd $MIOPEN_TMP_DIR/eigen
 rm -rf build
 cmake -S . -B build -G Ninja \
@@ -85,7 +85,7 @@ cmake --build build
 cmake --build build -t install
 popd
 
-# git clone --depth 1 -b master https://github.com/ROCmSoftwarePlatform/frugally-deep $MIOPEN_TMP_DIR/frugally-deep
+git clone --depth 1 -b master https://github.com/ROCmSoftwarePlatform/frugally-deep $MIOPEN_TMP_DIR/frugally-deep
 pushd $MIOPEN_TMP_DIR/frugally-deep
 rm -rf build
 cmake -S . -B build -G Ninja \
@@ -96,7 +96,7 @@ cmake --build build -t install
 popd
 
 # CK
-# git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/composable_kernel $MIOPEN_TMP_DIR/ck
+git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/composable_kernel $MIOPEN_TMP_DIR/ck
 pushd $MIOPEN_TMP_DIR/ck
 rm -rf build
 export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
