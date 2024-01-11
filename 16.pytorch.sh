@@ -16,16 +16,16 @@ if [ ! -d $ROCM_TMP_DIR/pytorch ]; then
 fi
 
 eval "$($CONDA_PATH/bin/conda shell.bash hook)"
-if ! conda env list | grep -q "pytorch"; then
-  conda create -y -n "pytorch" python=3.11
-  conda activate pytorch
+if ! conda env list | grep -q $CONDA_ENV; then
+  conda create -y -n $CONDA_ENV python=3.11
+  conda activate $CONDA_ENV
   pushd $ROCM_TMP_DIR/pytorch
     conda install -y mkl mkl-include pyyaml
     pip3 install -r requirements.txt
   popd
 fi
 
-conda activate pytorch
+conda activate $CONDA_ENV
 which python3
 pushd $ROCM_TMP_DIR/pytorch
   rm -rf build

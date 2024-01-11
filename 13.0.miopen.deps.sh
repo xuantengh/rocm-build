@@ -3,24 +3,35 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
 
-# Sqlite3
-git clone https://github.com/sqlite/sqlite -b release --depth 1 $MIOPEN_TMP_DIR/sqlite 
-pushd $MIOPEN_TMP_DIR/sqlite 
-rm -rf build
-mkdir build && cd build
+# # Sqlite3
+# git clone https://github.com/sqlite/sqlite -b release --depth 1 $MIOPEN_TMP_DIR/sqlite 
+# pushd $MIOPEN_TMP_DIR/sqlite 
+# rm -rf build
+# mkdir build && cd build
+# 
+# ../configure --prefix=$ROCM_INSTALL_PREFIX
+# make -j64
+# make install
+# popd
+# 
+# # Conda
+# if [ ! -d $CONDA_PATH ]; then
+#   wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/tmp/miniconda.sh
+#   chmod +x $HOME/tmp/miniconda.sh
+#   $HOME/tmp/miniconda.sh -b
+# fi
+# eval "$($CONDA_PATH/bin/conda shell.bash hook)"
+# if ! conda env list | grep -q $CONDA_ENV; then
+#   conda create -y -n $CONDA_ENV python=3.11
+# fi
 
-../configure --prefix=$ROCM_INSTALL_PREFIX
-make -j64
-make install
-popd
-
-# Boost
-wget https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.gz -O $MIOPEN_TMP_DIR/boost.tar.gz
-tar -zxvf $MIOPEN_TMP_DIR/boost_1.79.tar.gz -C $MIOPEN_TMP_DIR
+# # Boost
+# wget https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.gz -O $MIOPEN_TMP_DIR/boost.tar.gz
+tar -zxvf $MIOPEN_TMP_DIR/boost.tar.gz -C $MIOPEN_TMP_DIR
 pushd $MIOPEN_TMP_DIR/boost_*
 rm -rf build stage
 ./bootstrap.sh --without-libraries="mpi" \
-  --with-python=/mnt/nvme0/home/xuantengh/miniconda3/envs/pytorch/bin/python3
+  --with-python=$CONDA_PATH/envs/$CONDA_ENV/bin/python3
 ./b2 install cxxflags=-fPIC cflags=-fPIC --prefix=$ROCM_INSTALL_PREFIX --build-dir=./build -q --without-mpi --link=shared
 popd
 

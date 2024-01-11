@@ -24,7 +24,7 @@ popd
 # https://github.com/ROCm/hipRAND/wiki/Build
 pushd $ROCM_TMP_DIR/hiprand
 rm -rf build
-export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
+
 cmake -S . -B build -G Ninja \
 -DROCM_PATH=$ROCM_INSTALL_PREFIX \
 -DCMAKE_CXX_COMPILER=$ROCM_INSTALL_PREFIX/bin/hipcc \

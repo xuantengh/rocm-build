@@ -21,7 +21,7 @@ cmake --build build
 cmake --build build -t install
 popd
 
-wget https://repo.radeon.com/rocm/apt/6.0/pool/main/m/miopen-hip-gfx908kdb/miopen-hip-gfx908kdb_3.00.0.60000-91~22.04_amd64.deb -O $ROCM_TMP_DIR/miopen-kdb.deb
+wget https://repo.radeon.com/rocm/apt/6.0/pool/main/m/miopen-hip-${ROCM_GPU_ARCH}kdb/miopen-hip-${ROCM_GPU_ARCH}kdb_3.00.0.60000-91~22.04_amd64.deb -O $ROCM_TMP_DIR/miopen-kdb.deb
 dpkg-deb -R $ROCM_TMP_DIR/miopen-kdb.deb $ROCM_TMP_DIR/miopen-kdb
 cp -r $ROCM_TMP_DIR/miopen-kdb/opt/rocm-$ROCM_VERSION/* $ROCM_INSTALL_PREFIX
 
