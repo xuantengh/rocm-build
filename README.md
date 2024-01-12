@@ -12,12 +12,11 @@ Run the shell script **one by one** as the prefix numbers follow the dependency 
 # ROCm will be installed at $HOME/opt/rocm/x.y.z, change the version and install prefix in `common.sh`
 ./0.radeontop.sh
 ./1.llvm.sh
-./2.rocm.sh
 # ...
 ```
 
 > [!CAUTION]
-> Patch is required for PyTorch building with ROCm 6.0, see `19.pytorch.sh` for detauls.
+> Patch is required for PyTorch building with ROCm 6.0. Check `ubuntu/amd-gpu/patches/pytorch.$PYTORCH_BRANCH.patch` for details.
 
 ## Test
 
