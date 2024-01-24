@@ -20,7 +20,12 @@ bash /root/amdgpu-install.commands.sh
 
 apt update
 apt install libstdc++-12-dev
+apt install trace-cmd # for kernel module function trace
 
+# Check installation
+lsmod | grep amd
+
+exit
 # Optional: fetch `amdgpu-dkms` .deb src from AMD website, and build from source
 wget https://repo.radeon.com/amdgpu/6.0/ubuntu/pool/main/a/amdgpu-dkms/amdgpu-dkms_6.3.6.60000-1697589.22.04_all.deb -P /root/downloads
 dkpg-deb -R /root/downloads/amdgpu-dkms_6.3.6.60000-1697589.22.04_all.deb \
@@ -28,6 +33,4 @@ dkpg-deb -R /root/downloads/amdgpu-dkms_6.3.6.60000-1697589.22.04_all.deb \
 wget https://repo.radeon.com/amdgpu/6.0/ubuntu/pool/main/a/amdgpu-dkms/amdgpu-dkms-firmware_6.3.6.60000-1697589.22.04_all.deb -P /root/downloads
 dkpg-deb -R /root/downloads/amdgpu-dkms-firmware_6.3.6.60000-1697589.22.04_all.deb /tmp/amdgpu-dkms-firmware
 
-# Check installation
-lsmod | grep amd
 

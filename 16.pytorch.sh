@@ -3,29 +3,29 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
 
-# if [ ! -d $ROCM_TMP_DIR/pytorch ]; then
-#   git clone https://github.com/pytorch/pytorch $ROCM_TMP_DIR/pytorch -b $PYTORCH_BRANCH --depth 1
-#   pushd $ROCM_TMP_DIR/pytorch
-#     git submodule sync
-#     git submodule update --init --recursive
-#     git apply < $SCRIPT_DIR/patches/pytorch.$PYTORCH_BRANCH.patch
-#   popd
-# fi
-# 
+if [ ! -d $ROCM_TMP_DIR/pytorch ]; then
+  git clone https://github.com/pytorch/pytorch $ROCM_TMP_DIR/pytorch -b $PYTORCH_BRANCH --depth 1
+  pushd $ROCM_TMP_DIR/pytorch
+    git submodule sync
+    git submodule update --init --recursive
+    git apply < $SCRIPT_DIR/patches/pytorch.$PYTORCH_BRANCH.patch
+  popd
+fi
+
 eval "$($CONDA_PATH/bin/conda shell.bash hook)"
-# if ! conda env list | grep -q $CONDA_ENV; then
-#   conda create -y -n $CONDA_ENV python=3.11
-#   conda activate $CONDA_ENV
-#   pushd $ROCM_TMP_DIR/pytorch
-#     conda install -y mkl mkl-include pyyaml
-#     pip3 install -r requirements.txt
-#   popd
-# fi
+if ! conda env list | grep -q $CONDA_ENV; then
+  conda create -y -n $CONDA_ENV python=3.11
+  conda activate $CONDA_ENV
+  pushd $ROCM_TMP_DIR/pytorch
+    conda install -y mkl mkl-include pyyaml
+    pip3 install -r requirements.txt
+  popd
+fi
 
 conda activate $CONDA_ENV
 which python3
 pushd $ROCM_TMP_DIR/pytorch
-  # python3 tools/amd_build/build_amd.py
+  python3 tools/amd_build/build_amd.py
   rm -rf build
 
   export _GLIBCXX_USE_CXX11_ABI=1
