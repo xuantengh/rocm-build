@@ -77,3 +77,6 @@ popd
 
 popd
 
+mkdir -p $HOME/softwares/modulefiles/criu
+python3 $SCRIPT_DIR/../../misc/envm_generator.py $CRIU_PREFIX > $HOME/softwares/modulefiles/criu/$CRIU_VERSION
+
