@@ -2,6 +2,7 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
+module load rocm/$ROCM_VERSION
 
 # Sqlite3
 git clone https://github.com/sqlite/sqlite -b release --depth 1 $MIOPEN_TMP_DIR/sqlite 
@@ -106,11 +107,15 @@ cmake --build build
 cmake --build build -t install
 popd
 
-# CK
+# CK, JIT option: https://github.com/ROCm/composable_kernel/issues/782, on branch migx_merge
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/composable_kernel $MIOPEN_TMP_DIR/ck
 pushd $MIOPEN_TMP_DIR/ck
+# git fetch remote migx_merge:migx_merge --depth 1
+# git merge migx_merge --allow-unrelated-histories -Xtheirs --no-edit
+
 rm -rf build
-export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
+module load rocm/$ROCM_VERSION
+
 cmake -S . -B build -G Ninja \
 -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_PREFIX_PATH=$ROCM_INSTALL_PREFIX \
@@ -118,9 +123,11 @@ cmake -S . -B build -G Ninja \
 -DINSTANCES_ONLY=ON \
 -DGPU_TARGETS=$ROCM_GPU_ARCH \
 -DCMAKE_INSTALL_PREFIX=$ROCM_INSTALL_PREFIX
+# -DCK_BUILD_JIT_LIB=ON
 
 cmake --build build
 cmake --build build -t install
-unset LD_LIBRARY_PATH
+
+module purge
 popd
 
