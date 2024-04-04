@@ -6,7 +6,8 @@ source $SCRIPT_DIR/common.sh
 git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/rocRAND $ROCM_TMP_DIR/rocrand
 git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/hipRAND $ROCM_TMP_DIR/hiprand
 
-export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
+source $HOME/softwares/init/bash
+module load rocm/$ROCM_VERSION
 
 pushd $ROCM_TMP_DIR/rocrand
 git submodule update --init

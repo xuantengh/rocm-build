@@ -1,0 +1,39 @@
+diff --git a/aten/src/ATen/cuda/detail/CUDAHooks.cpp b/aten/src/ATen/cuda/detail/CUDAHooks.cpp
+index acb9b19..24c29a6 100644
+--- a/aten/src/ATen/cuda/detail/CUDAHooks.cpp
++++ b/aten/src/ATen/cuda/detail/CUDAHooks.cpp
+@@ -151,7 +151,7 @@ bool CUDAHooks::isPinnedPtr(const void* data) const {
+     return false;
+   }
+ #endif
+-#if !defined(USE_ROCM)
++#if !defined(USE_ROCM) || (defined(USE_ROCM) && ROCM_VERSION >= 50700)
+   return attr.type == cudaMemoryTypeHost;
+ #else
+   return attr.memoryType == cudaMemoryTypeHost;
+diff --git a/caffe2/CMakeLists.txt b/caffe2/CMakeLists.txt
+index 7483637..d91f3df 100644
+--- a/caffe2/CMakeLists.txt
++++ b/caffe2/CMakeLists.txt
+@@ -694,7 +694,7 @@ if(USE_ROCM)
+   add_library(caffe2_nvrtc SHARED ${ATen_NVRTC_STUB_SRCS})
+   target_link_libraries(caffe2_nvrtc ${PYTORCH_HIP_LIBRARIES} ${ROCM_HIPRTC_LIB})
+   target_include_directories(caffe2_nvrtc PRIVATE ${CMAKE_BINARY_DIR})
+-  target_compile_definitions(caffe2_nvrtc PRIVATE USE_ROCM __HIP_PLATFORM_HCC__)
++  target_compile_definitions(caffe2_nvrtc PRIVATE USE_ROCM __HIP_PLATFORM_AMD__)
+   install(TARGETS caffe2_nvrtc DESTINATION "${TORCH_INSTALL_LIB_DIR}")
+ endif()
+ 
+diff --git a/cmake/Dependencies.cmake b/cmake/Dependencies.cmake
+index acc9584..780c3a3 100644
+--- a/cmake/Dependencies.cmake
++++ b/cmake/Dependencies.cmake
+@@ -1280,7 +1280,7 @@ if(USE_ROCM)
+       ${PYTORCH_HIP_LIBRARIES} ${PYTORCH_MIOPEN_LIBRARIES} ${hipcub_LIBRARIES} ${ROCM_HIPRTC_LIB} ${ROCM_ROCTX_LIB})
+ 
+     list(APPEND Caffe2_PUBLIC_HIP_DEPENDENCY_LIBS
+-      roc::hipblas hip::hipfft hip::hiprand roc::hipsparse roc::hipsolver)
++      roc::hipblas hip::hipfft hip::hiprand roc::hipsparse roc::hipsolver ncurses)
+ 
+     # ---[ Kernel asserts
+     # Kernel asserts is disabled for ROCm by default.

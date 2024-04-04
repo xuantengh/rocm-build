@@ -8,10 +8,14 @@ conda activate $CONDA_ENV
 
 git clone https://github.com/pytorch/text $TORCH_TMP_DIR/text --depth 1 -b $TEXT_VERSION
 
-export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
+source $HOME/softwares/init/bash
+module load rocm/$ROCM_VERSION
+
 pushd $TORCH_TMP_DIR/text
 git submodule update --init --recursive
 rm -rf build
 python setup.py develop
 popd
+
+python3 -c "import torchtext"
 

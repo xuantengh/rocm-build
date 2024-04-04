@@ -9,9 +9,9 @@ conda activate $CONDA_ENV
 which python3
 which pip3
 
-# pip3 install protobuf
+pip3 install protobuf
 
-# git clone https://github.com/msgpack/msgpack-c --depth 1 -b cpp-6.1.0 $ROCM_TMP_DIR/msgpack
+git clone https://github.com/msgpack/msgpack-c --depth 1 -b cpp-6.1.0 $ROCM_TMP_DIR/msgpack
 pushd $ROCM_TMP_DIR/msgpack
 rm -rf build
 cmake -S . -B build -G Ninja \

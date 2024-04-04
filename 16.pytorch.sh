@@ -29,7 +29,7 @@ pushd $ROCM_TMP_DIR/pytorch
   rm -rf build
 
   export _GLIBCXX_USE_CXX11_ABI=1
-  export CMAKE_PREFIX_PATH="$CONDA_PATH/envs/$CONDA_ENV;$ROCM_INSTALL_PREFIX"
+  export CMAKE_PREFIX_PATH="$CONDA_PREFIX;$ROCM_INSTALL_PREFIX"
   export ROCM_PATH=$ROCM_INSTALL_PREFIX
   export USE_KINETO=0
   export USE_LMDB=1
@@ -48,4 +48,8 @@ pushd $ROCM_TMP_DIR/pytorch
   export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
   python setup.py develop
 popd
+
+source $HOME/softwares/init/bash
+module load rocm/$ROCM_VERSION
+python3 -c "import torch; print(torch.cuda.is_available())"
 

@@ -7,7 +7,7 @@ source $SCRIPT_DIR/common.sh
 git clone https://github.com/ROCm/ROCT-Thunk-Interface $ROCM_TMP_DIR/roct -b rocm-$ROCM_VERSION --depth 1
 pushd $ROCM_TMP_DIR/roct
 rm -rf build
-cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release \
+cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 -DCMAKE_INSTALL_PREFIX=$ROCM_INSTALL_PREFIX
 cmake --build build
 cmake --build build -t install
@@ -18,7 +18,7 @@ git clone https://github.com/ROCm/ROCR-Runtime $ROCM_TMP_DIR/rocr -b rocm-$ROCM_
 pushd $ROCM_TMP_DIR/rocr
 rm -rf build
 cmake -S src -B build -G "Ninja" \
--DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 -DCMAKE_INSTALL_PREFIX=$ROCM_INSTALL_PREFIX \
 -Dhsakmt_DIR=$ROCM_INSTALL_PRERIX/lib/cmake/hsakmt \
 -DLLVM_DIR=$ROCM_INSTALL_PREFIX/lib/cmake \

@@ -5,10 +5,11 @@ source $SCRIPT_DIR/common.sh
 
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/rocSPARSE $ROCM_TMP_DIR/rocsparse
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/hipSPARSE $ROCM_TMP_DIR/hipsparse
+source $HOME/softwares/init/bash
 
 pushd $ROCM_TMP_DIR/rocsparse
+module load rocm/$ROCM_VERSION
 rm -rf build
-export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
 
 cmake -S . -B build -G Ninja \
 -DCMAKE_BUILD_TYPE=Release \
@@ -21,7 +22,7 @@ cmake -S . -B build -G Ninja \
 
 cmake --build build
 cmake --build build -t install
-unset LD_LIBRARY_PATH
+module purge
 popd
 
 # https://github.com/ROCm/hipSPARSE/wiki/Build

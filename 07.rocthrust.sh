@@ -6,7 +6,8 @@ source $SCRIPT_DIR/common.sh
 git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/rocPRIM $ROCM_TMP_DIR/rocPRIM
 git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/rocThrust $ROCM_TMP_DIR/rocThrust
 
-export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
+source $HOME/softwares/init/bash
+module load rocm/$ROCM_VERSION
 
 pushd $ROCM_TMP_DIR/rocPRIM
 rm -rf build
@@ -31,3 +32,4 @@ cmake --build build
 cmake --build build -t install
 popd
 
+module purge

@@ -12,10 +12,10 @@ which pip3
 source $HOME/softwares/init/bash
 module load rocm/$ROCM_VERSION
 
-# pip3 install pybind11
+pip3 install pybind11
 # TODO: change to release tag, use develop as for now due to blaze removal has not been release yet
 # https://github.com/ROCm/AMDMIGraphX/issues/2681
-# git clone https://github.com/ROCm/AMDMIGraphX -b develop --depth 1 $ROCM_TMP_DIR/migraphx
+git clone https://github.com/ROCm/AMDMIGraphX -b develop --depth 1 $ROCM_TMP_DIR/migraphx
 
 pushd $ROCM_TMP_DIR/migraphx
 rm -rf build

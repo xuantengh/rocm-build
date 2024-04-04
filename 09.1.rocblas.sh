@@ -11,7 +11,8 @@ git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/rocSOLVER $ROC
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/hipSOLVER $ROCM_TMP_DIR/hipsolver
 
 
-export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
+source $HOME/softwares/init/bash
+module load rocm/$ROCM_VERSION
 
 pushd $ROCM_TMP_DIR/rocblas
 # CC=$ROCM_INSTALL_PREFIX/bin/clang \

@@ -2,32 +2,34 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
+
+source $HOME/softwares/init/bash
 module load rocm/$ROCM_VERSION
 
-# Sqlite3
-git clone https://github.com/sqlite/sqlite -b release --depth 1 $MIOPEN_TMP_DIR/sqlite 
-pushd $MIOPEN_TMP_DIR/sqlite 
-rm -rf build
-mkdir build && cd build
+# # Sqlite3
+# git clone https://github.com/sqlite/sqlite -b release --depth 1 $MIOPEN_TMP_DIR/sqlite 
+# pushd $MIOPEN_TMP_DIR/sqlite 
+# rm -rf build
+# mkdir build && cd build
+# 
+# ../configure --prefix=$ROCM_INSTALL_PREFIX
+# make -j64
+# make install
+# popd
+# 
+# # Conda
+# if [ ! -d $CONDA_PATH ]; then
+#   wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/tmp/miniconda.sh
+#   chmod +x $HOME/tmp/miniconda.sh
+#   $HOME/tmp/miniconda.sh -b
+# fi
+# eval "$($CONDA_PATH/bin/conda shell.bash hook)"
+# if ! conda env list | grep -q $CONDA_ENV; then
+#   conda create -y -n $CONDA_ENV python=3.11
+# fi
 
-../configure --prefix=$ROCM_INSTALL_PREFIX
-make -j64
-make install
-popd
-
-# Conda
-if [ ! -d $CONDA_PATH ]; then
-  wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/tmp/miniconda.sh
-  chmod +x $HOME/tmp/miniconda.sh
-  $HOME/tmp/miniconda.sh -b
-fi
-eval "$($CONDA_PATH/bin/conda shell.bash hook)"
-if ! conda env list | grep -q $CONDA_ENV; then
-  conda create -y -n $CONDA_ENV python=3.11
-fi
-
-# # Boost
-# wget https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.gz -O $MIOPEN_TMP_DIR/boost.tar.gz
+# Boost
+wget https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.gz -O $MIOPEN_TMP_DIR/boost.tar.gz
 tar -zxvf $MIOPEN_TMP_DIR/boost.tar.gz -C $MIOPEN_TMP_DIR
 pushd $MIOPEN_TMP_DIR/boost_*
 rm -rf build stage
@@ -76,7 +78,7 @@ cmake --build build
 cmake --build build -t install
 popd
 
-git clone --depth 1 -b v0.2.18-p0 https://github.com/ROCmSoftwarePlatform/FunctionalPlus $MIOPEN_TMP_DIR/FunctionalPlus
+git clone --depth 1 -b v0.2.18-p0 https://github.com/ROCm/FunctionalPlus $MIOPEN_TMP_DIR/FunctionalPlus
 pushd $MIOPEN_TMP_DIR/FunctionalPlus
 rm -rf build
 cmake -S . -B build -G Ninja \
@@ -87,7 +89,7 @@ cmake --build build -t install
 popd
 
 # Eigen
-git clone --depth 1 -b 3.4.0 https://github.com/ROCmSoftwarePlatform/eigen $MIOPEN_TMP_DIR/eigen
+git clone --depth 1 -b 3.4.0 https://github.com/ROCm/eigen $MIOPEN_TMP_DIR/eigen
 pushd $MIOPEN_TMP_DIR/eigen
 rm -rf build
 cmake -S . -B build -G Ninja \
@@ -97,7 +99,7 @@ cmake --build build
 cmake --build build -t install
 popd
 
-git clone --depth 1 -b master https://github.com/ROCmSoftwarePlatform/frugally-deep $MIOPEN_TMP_DIR/frugally-deep
+git clone --depth 1 -b master https://github.com/ROCm/frugally-deep $MIOPEN_TMP_DIR/frugally-deep
 pushd $MIOPEN_TMP_DIR/frugally-deep
 rm -rf build
 cmake -S . -B build -G Ninja \
@@ -114,7 +116,6 @@ pushd $MIOPEN_TMP_DIR/ck
 # git merge migx_merge --allow-unrelated-histories -Xtheirs --no-edit
 
 rm -rf build
-module load rocm/$ROCM_VERSION
 
 cmake -S . -B build -G Ninja \
 -DCMAKE_BUILD_TYPE=Release \
@@ -127,7 +128,7 @@ cmake -S . -B build -G Ninja \
 
 cmake --build build
 cmake --build build -t install
+popd
 
 module purge
-popd
 
