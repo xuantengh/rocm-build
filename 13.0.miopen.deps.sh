@@ -6,27 +6,27 @@ source $SCRIPT_DIR/common.sh
 source $HOME/softwares/init/bash
 module load rocm/$ROCM_VERSION
 
-# # Sqlite3
-# git clone https://github.com/sqlite/sqlite -b release --depth 1 $MIOPEN_TMP_DIR/sqlite 
-# pushd $MIOPEN_TMP_DIR/sqlite 
-# rm -rf build
-# mkdir build && cd build
-# 
-# ../configure --prefix=$ROCM_INSTALL_PREFIX
-# make -j64
-# make install
-# popd
-# 
-# # Conda
-# if [ ! -d $CONDA_PATH ]; then
-#   wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/tmp/miniconda.sh
-#   chmod +x $HOME/tmp/miniconda.sh
-#   $HOME/tmp/miniconda.sh -b
-# fi
-# eval "$($CONDA_PATH/bin/conda shell.bash hook)"
-# if ! conda env list | grep -q $CONDA_ENV; then
-#   conda create -y -n $CONDA_ENV python=3.11
-# fi
+# Sqlite3
+git clone https://github.com/sqlite/sqlite -b release --depth 1 $MIOPEN_TMP_DIR/sqlite 
+pushd $MIOPEN_TMP_DIR/sqlite 
+rm -rf build
+mkdir build && cd build
+
+../configure --prefix=$ROCM_INSTALL_PREFIX
+make -j64
+make install
+popd
+
+# Conda
+if [ ! -d $CONDA_PATH ]; then
+  wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/tmp/miniconda.sh
+  chmod +x $HOME/tmp/miniconda.sh
+  $HOME/tmp/miniconda.sh -b
+fi
+eval "$($CONDA_PATH/bin/conda shell.bash hook)"
+if ! conda env list | grep -q $CONDA_ENV; then
+  conda create -y -n $CONDA_ENV python=$CONDA_PYTHON_VERSION
+fi
 
 # Boost
 wget https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.gz -O $MIOPEN_TMP_DIR/boost.tar.gz

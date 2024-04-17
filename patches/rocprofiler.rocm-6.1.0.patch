@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 60382f9..a54ed7b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -211,7 +211,7 @@ endif()
+ if(ROCPROFILER_BUILD_TESTS)
+     # Build tests
+     add_subdirectory(test)
+-    add_subdirectory(tests-v2)
++    # add_subdirectory(tests-v2)
+ endif()
+ 
+ # Installation and packaging

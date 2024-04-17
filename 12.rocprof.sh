@@ -3,7 +3,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
 
-git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/rocprofiler $ROCM_TMP_DIR/rocprofiler
+git clone --depth 1 -b rocm-6.0.2 https://github.com/ROCm/rocprofiler $ROCM_TMP_DIR/rocprofiler
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/roctracer $ROCM_TMP_DIR/roctracer
 
 # Install hsa-amd-aqlprofile package

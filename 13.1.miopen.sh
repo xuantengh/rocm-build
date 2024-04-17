@@ -28,7 +28,9 @@ simplified_version=$(echo $ROCM_VERSION | awk -F'.' '{if ($3 == "0") {print $1".
 os_version=$(cat /etc/os-release | grep VERSION_ID | cut -d '=' -f2)
 os_version=${os_version#\"}
 os_version=${os_version%\"}
-wget "https://repo.radeon.com/rocm/apt/${simplified_version}/pool/main/m/miopen-hip-${ROCM_GPU_ARCH}kdb/miopen-hip-${ROCM_GPU_ARCH}kdb_3.00.0.60002-115~${os_version}_amd64.deb" -O $ROCM_TMP_DIR/miopen-kdb.deb
+wget "https://repo.radeon.com/rocm/apt/6.1/pool/main/m/miopen-hip/miopen-hip_3.1.0.60100-82~22.04_amd64.deb" \
+  -O $ROCM_TMP_DIR/miopen-kdb.deb
+
 dpkg-deb -R $ROCM_TMP_DIR/miopen-kdb.deb $ROCM_TMP_DIR/miopen-kdb
 cp -r $ROCM_TMP_DIR/miopen-kdb/opt/rocm-$ROCM_VERSION/* $ROCM_INSTALL_PREFIX
 

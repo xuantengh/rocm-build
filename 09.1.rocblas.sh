@@ -5,7 +5,7 @@ source $SCRIPT_DIR/common.sh
 
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/rocBLAS $ROCM_TMP_DIR/rocblas
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/hipBLAS $ROCM_TMP_DIR/hipblas
-git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/hipBLASLt $ROCM_TMP_DIR/hipblaslt
+# git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/hipBLASLt $ROCM_TMP_DIR/hipblaslt
 
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/rocSOLVER $ROCM_TMP_DIR/rocsolver
 git clone --depth 1 -b rocm-$ROCM_VERSION https://github.com/ROCm/hipSOLVER $ROCM_TMP_DIR/hipsolver
@@ -60,7 +60,8 @@ rm -rf build
 cmake -S . -B build -G Ninja \
   -DCMAKE_CXX_COMPILER=$ROCM_INSTALL_PREFIX/bin/hipcc \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=$ROCM_INSTALL_PREFIX
+  -DCMAKE_INSTALL_PREFIX=$ROCM_INSTALL_PREFIX \
+  -DBUILD_WITH_SPARSE=OFF
 cmake --build build
 cmake --build build -t install
 popd

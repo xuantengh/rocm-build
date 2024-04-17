@@ -14,7 +14,7 @@ fi
 
 eval "$($CONDA_PATH/bin/conda shell.bash hook)"
 if ! conda env list | grep -q $CONDA_ENV; then
-  conda create -y -n $CONDA_ENV python=3.11
+  conda create -y -n $CONDA_ENV python=$CONDA_PYTHON_VERSION
   conda activate $CONDA_ENV
   pushd $ROCM_TMP_DIR/pytorch
     conda install -y mkl mkl-include pyyaml
@@ -22,8 +22,10 @@ if ! conda env list | grep -q $CONDA_ENV; then
   popd
 fi
 
+source $HOME/softwares/init/bash
+module load rocm/$ROCM_VERSION
+
 conda activate $CONDA_ENV
-which python3
 pushd $ROCM_TMP_DIR/pytorch
   python3 tools/amd_build/build_amd.py
   rm -rf build
@@ -45,11 +47,8 @@ pushd $ROCM_TMP_DIR/pytorch
   export USE_NNPACK=0
   export USE_QNNPACK=0
   export USE_XNNPACK=0
-  export LD_LIBRARY_PATH=$ROCM_INSTALL_PREFIX/lib
   python setup.py develop
 popd
 
-source $HOME/softwares/init/bash
-module load rocm/$ROCM_VERSION
 python3 -c "import torch; print(torch.cuda.is_available())"
 

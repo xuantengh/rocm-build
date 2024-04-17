@@ -4,7 +4,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
 
 git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/ROCdbgapi $ROCM_TMP_DIR/rocgdbapi
-# git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/ROCgdb $ROCM_TMP_DIR/rocgdb
+git clone -b rocm-$ROCM_VERSION --depth 1 https://github.com/ROCm/ROCgdb $ROCM_TMP_DIR/rocgdb
  
 pushd $ROCM_TMP_DIR/rocgdbapi
 rm -rf build

@@ -4,9 +4,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/common.sh
 
 LLVM_DIR=$ROCM_TMP_DIR/llvm-project
-git clone https://github.com/ROCm/ROCm-Device-Libs.git $ROCM_TMP_DIR/device-libs -b rocm-$ROCM_VERSION --depth 1
 
-pushd $ROCM_TMP_DIR/device-libs
+# device-libs are now integrated as a part of AMD llvm-project
+pushd $LLVM_DIR/amd/device-libs
 rm -rf build
 
 cmake -S . -B build -G "Ninja" \
