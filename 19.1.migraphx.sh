@@ -35,7 +35,7 @@ cmake --build build
 cmake --build build -t install
 popd
 
-# git clone https://github.com/ROCm/torch_migraphx --depth 1 $ROCM_TMP_DIR/torch_migraphx
+git clone https://github.com/ROCm/torch_migraphx --depth 1 $ROCM_TMP_DIR/torch_migraphx
 pushd $ROCM_TMP_DIR/torch_migraphx/py
 rm -rf build
 ROCM_PATH=$ROCM_INSTALL_PREFIX \
